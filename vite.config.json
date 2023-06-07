@@ -1,0 +1,11 @@
+{
+  "build": {
+    "rollupOptions": {
+      "input": {
+        "main": "index.html",
+        "story": "story/index.html",
+        "game": "game/index.html"
+      }
+    }
+  }
+}

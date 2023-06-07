@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <link rel="stylesheet" href="../normalize.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yatra+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <canvas id="canvas" width="0" height="0"></canvas>
+    <div style="display:none;">
+      <img id="source" src="../teacher-wizowl.png" width="1680" height="192" />
+    </div>
+    <div class="bubbles bubble-small" style="display:none;">
+      <img src="../bubble-small.png">
+      <div class="bubble-text"></div>
+    </div>
+    <div class="bubbles bubble-medium" style="display:none;">
+      <img  src="../bubble-medium.png">
+      <div class="bubble-text"></div>
+    </div>
+    <div class="bubbles bubble-large" style="display:none;">
+      <img  src="../bubble-large.png">
+      <div class="bubble-text"></div>
+    </div>
+    
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
