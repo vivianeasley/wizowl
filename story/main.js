@@ -99,7 +99,7 @@ const introArr = [
     sound: 'acXUeTVbf',
   },
   {
-    onFinish: ()=>location.href = '/game/'
+    onFinish: ()=>location.href = '../game/'
   }
 ]
 
@@ -113,7 +113,7 @@ const loseArr = [
     sound: 'acXUeTVbf',
   },
   {
-    onFinish: ()=>location.href = '/game/'
+    onFinish: ()=>location.href = '../game/'
   }
 ];
 
@@ -127,7 +127,7 @@ const winArr = [
     sound: 'VVUXcZaXUTfYe',
   },
   {
-    onFinish: ()=>location.href = '/' // winning score open high score input
+    onFinish: ()=>location.href = '../' // winning score open high score input
   }
 ];
 
@@ -167,6 +167,7 @@ function progressStory () {
 }
 
 function speak (arr, endIndex, soundNotes, row) {
+  const currentStoryIndex = storyIndex;
   if (!arr) {
     ctx.drawImage(image, endIndex * 140, 192*row, 140, 192, 0, 0, window.innerWidth, window.innerHeight);
     return;
@@ -176,7 +177,7 @@ function speak (arr, endIndex, soundNotes, row) {
   sound(shuffleString(soundNotes), 0.3);
 
   function changeImage () {
-    if (!arr[counter]) {
+    if (!arr[counter] || currentStoryIndex !== storyIndex) {
       ctx.drawImage(image, endIndex * 140, 192*row, 140, 192, 0, 0, window.innerWidth, window.innerHeight);
       return;
     }

@@ -1,3 +1,16 @@
+import {Howl, Howler} from 'howler';
+
+let isMusicPlaying = false;
+
+const sound = new Howl({
+  src: ['../lite-saturation-despair-metal-trailer.mp3'],
+  html5: true,
+  autoplay: true,
+  loop: true,
+  volume: 0.5,
+  onplay: () =>isMusicPlaying = true
+});
+
 const ongoingTouches = [];
 let interval;
 
@@ -83,20 +96,6 @@ function tickCheck () {
     if (happiness !== 0) happiness--;
   }
 
-  // // Force
-  if (level > 1) {
-    if (targets.force === 'heavy' && force < 0.5) {
-      if (happiness !== 0) happiness--;
-    } else if (targets.force === 'heavy' && force >= 0.5) {
-      if (happiness < 4) happiness++;
-    }
-    if (targets.force === 'light' && force >= 0.5) {
-      if (happiness !== 0) happiness--;
-    } else if (targets.force === 'light' && force < 0.5) {
-      if (happiness < 4) happiness++;
-    }
-  } 
-
   // Size (swipSize)
   if (level > 1) {
     if (targets.swipeSize === 'large' && swipeSize < 4) {
@@ -111,6 +110,21 @@ function tickCheck () {
       if (happiness !== 0) happiness--;
     }
   }
+
+  // // // Force
+  // console.log("force", force);
+  // if (level > 2) {
+  //   if (targets.force === 'heavy' && force < 0.5) {
+  //     if (happiness !== 0) happiness--;
+  //   } else if (targets.force === 'heavy' && force >= 0.5) {
+  //     if (happiness < 4) happiness++;
+  //   }
+  //   if (targets.force === 'light' && force >= 0.5) {
+  //     if (happiness !== 0) happiness--;
+  //   } else if (targets.force === 'light' && force < 0.5) {
+  //     if (happiness < 4) happiness++;
+  //   }
+  // } 
 
   
   // Stop and go (isTouched)
@@ -153,25 +167,25 @@ function tickCheck () {
   }
 
   // If you don't lose for just under 2 min you win round
-  if (intervalCount > 240) {
+  if (intervalCount > 140) {
     level++;
     levelNode.textContent = level;
-    if (level > 4) {
+    if (level > 3) {
       location.href = '../story/?type=win';
       reset();
       clearInterval(interval);
     } else {
       addText(`Level ${level}!`, "#00fff5");
-      if (level === 2) addText("Pressure Added", "#00fff5");
-      if (level === 3) addText("Circle Size Added", "#00fff5");
-      if (level === 4) addText("Pauses Added", "#00fff5");
+      // if (level === 2) addText("Pressure Added", "#00fff5");
+      if (level === 2) addText("Circle Size Added", "#00fff5");
+      if (level === 3) addText("Pauses Added", "#00fff5");
       intervalCount = 0;
     }
   }
 
   speedCount++;
   intervalCount++;
-  if (intervalCount % 50 === 0) {
+  if (intervalCount % 25 === 0) {
     const speeds = [0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3];
     lastTargets = {...targets};
 
@@ -184,15 +198,15 @@ function tickCheck () {
       if (targets.swipeSpeedTarget < lastTargets.swipeSpeedTarget) addText("Slower!");
       if (targets.swipeSpeedTarget > lastTargets.swipeSpeedTarget) addText("Faster!");
     }
-    if (targets.force !== lastTargets.force && level > 1) {
-      if (targets.force === 'light') addText("Lighter touch!");
-      if (targets.force === 'heavy') addText("Heavier touch!");
-    }
-    if (targets.swipeSize !== lastTargets.swipeSize && level > 2) {
+    if (targets.swipeSize !== lastTargets.swipeSize && level > 1) {
       if (targets.swipeSize === 'small') addText("Smaller circles!");
       if (targets.swipeSize === 'large') addText("Larger circles!");
     }
-    if (targets.isTouching !== lastTargets.isTouching  && level > 3) {
+    // if (targets.force !== lastTargets.force && level > 2) {
+    //   if (targets.force === 'light') addText("Lighter touch!");
+    //   if (targets.force === 'heavy') addText("Heavier touch!");
+    // }
+    if (targets.isTouching !== lastTargets.isTouching  && level > 2) {
       if (targets.isTouching === true) addText("Start!");
       if (targets.isTouching === false) addText("Stop!");
     }
@@ -218,6 +232,10 @@ document.addEventListener("DOMContentLoaded", startup);
 function handleStart(evt) {
   evt.preventDefault();
   isTouching = true;
+  if (isMusicPlaying === false) {
+    sound.play();
+    console.log("music start")
+  }
   updateTouchValues(evt.changedTouches)
 }
 
